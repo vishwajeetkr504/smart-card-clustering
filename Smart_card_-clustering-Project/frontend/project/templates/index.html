@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Segmentation Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-gray-900 text-gray-100 min-h-screen font-sans">
+
+    <nav class="bg-gray-800 border-b border-gray-700 px-6 py-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-600 p-2 rounded-lg text-white font-bold tracking-wider text-sm">AI</div>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+                DataAnalytics Studio
+            </h1>
+        </div>
+        <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-medium">
+            K-Means Pipeline Active
+        </span>
+    </nav>
+
+    <main class="max-w-7xl mx-auto p-6 space-y-6">
+        
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-gray-800/50 p-6 rounded-2xl border border-gray-800 backdrop-blur">
+            <div>
+                <h2 class="text-2xl font-semibold">Credit Card Customer Segmentation</h2>
+                <p class="text-gray-400 text-sm mt-1">Unsupervised Machine Learning insight generation dashboard using KMeans clustering algorithm.</p>
+            </div>
+            <button id="refreshBtn" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium px-5 py-2.5 rounded-xl transition duration-200 shadow-lg shadow-indigo-600/20 active:scale-95 cursor-pointer">
+                Run Live Analytics
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl p-6 shadow-sm">
+                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider">Total Records Analyzed</p>
+                <h3 id="totalCustomers" class="text-3xl font-bold mt-2 text-indigo-400">Loading...</h3>
+            </div>
+            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl p-6 shadow-sm">
+                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider">Optimal Clusters (K)</p>
+                <h3 id="numClusters" class="text-3xl font-bold mt-2 text-purple-400">Loading...</h3>
+            </div>
+            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl p-6 shadow-sm">
+                <p class="text-gray-400 text-xs font-semibold uppercase tracking-wider">Output State</p>
+                <h3 class="text-lg font-semibold mt-3 text-emerald-400 flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    results.csv generated
+                </h3>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl p-6">
+                <h4 class="text-lg font-medium mb-4 text-gray-200">Cluster Size Distribution</h4>
+                <div class="h-64 flex items-center justify-center">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-gray-800 border border-gray-700/60 rounded-2xl p-6">
+                <h4 class="text-lg font-medium mb-4 text-gray-200">Financial Insights Profile (Averages)</h4>
+                <div class="h-64 flex items-center justify-center">
+                    <canvas id="profileChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 border border-gray-700/60 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-700/60 flex justify-between items-center bg-gray-800/30">
+                <h4 class="text-lg font-medium text-gray-200">Dataset Preview (First 10 Classified Customers)</h4>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-sm text-gray-300">
+                    <thead class="bg-gray-900/50 text-gray-400 uppercase text-xs tracking-wider border-b border-gray-700/60">
+                        <tr>
+                            <th class="px-6 py-3.5 font-medium">Customer ID</th>
+                            <th class="px-6 py-3.5 font-medium">Balance</th>
+                            <th class="px-6 py-3.5 font-medium">Purchases</th>
+                            <th class="px-6 py-3.5 font-medium">Credit Limit</th>
+                            <th class="px-6 py-3.5 font-medium">Payments</th>
+                            <th class="px-6 py-3.5 font-medium text-right">Assigned Cluster</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-gray-700/40">
+                        <tr>
+                            <td colspan="6" class="px-6 py-10 text-center text-gray-500">Processing records...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>  
