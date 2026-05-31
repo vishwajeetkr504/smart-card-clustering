@@ -7,7 +7,7 @@ import os
 df = pd.read_csv("data/CC GENERAL.csv")
 
 # Data cleaning
-df.drop(['CUST_ID'], axis=1, inplace=True)
+df.drop(['CUST_ID'], axis=1, inplace=True)   
 df.fillna(df.mean(), inplace=True)
 
 # Scaling
